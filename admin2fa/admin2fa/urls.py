@@ -15,8 +15,16 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django_otp.decorators import otp_required
+from django.urls import path, include
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    # Protect admin with OTP
+    path('admin/', otp_required(admin.site.urls)),
+
+    # Include two_factor URLs with namespace correctly
+    path('', include(('two_factor.urls', 'two_factor'), namespace='two_factor')),
+
+    # Optional local app
+    path('', include('accounts.urls')),
 ]

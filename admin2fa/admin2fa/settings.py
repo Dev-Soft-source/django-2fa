@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'django_otp.plugins.otp_totp',
     'django_otp.plugins.otp_static',
     'two_factor',
-    
+
     'accounts',
 ]
 
@@ -66,6 +66,13 @@ MIDDLEWARE = [
 
 ]
 
+# Static & Templates
+STATIC_URL = '/static/'
+LOGOUT_REDIRECT_URL = '/admin/'
+
+# Email (for backup OTPs)
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 ROOT_URLCONF = 'admin2fa.urls'
 
 TEMPLATES = [
@@ -75,6 +82,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
@@ -133,6 +141,8 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+LOGIN_URL = 'two_factor:login'
+LOGIN_REDIRECT_URL = '/admin/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
